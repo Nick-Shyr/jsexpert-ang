@@ -1,7 +1,13 @@
-<mat-selection-list #users>
-    <mat-list-option *ngFor="let user of usersList">
-        <span>{{user.username}}</span>
-        <span>{{user.name}}</span>
+<mat-selection-list #users> <!-- #name - template reference variable для елементу, котрий може підтримувати даний запис -->
+    <mat-list-option 
+        *ngFor="let user of usersList; let i = index"
+        [ngClass]="{'gray': i%2}"> <!-- Додає клас грей, якщо виконується умова-->
+        <div>
+            <span class="item circle">{{i + 1}}</span>
+            <span class="item">{{user.username}}</span>
+            <span class="item">{{user.name}}</span>
+            <span  *ngIf="user.role === 'Admin'" class="item">{{user.role}}</span>
+        </div>
     </mat-list-option>
 </mat-selection-list>
 
