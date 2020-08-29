@@ -1,16 +1,33 @@
-<mat-selection-list #users> <!-- #name - template reference variable для елементу, котрий може підтримувати даний запис -->
-    <mat-list-option 
-        *ngFor="let user of usersList; let i = index"
-        [ngClass]="{'gray': i%2}"> <!-- Додає клас грей, якщо виконується умова-->
-        <div>
-            <span class="item circle">{{i + 1}}</span>
-            <span class="item">{{user.username}}</span>
-            <span class="item">{{user.name}}</span>
-            <span  *ngIf="user.role === 'Admin'" class="item">{{user.role}}</span>
-        </div>
-    </mat-list-option>
+<div class="line">
+  <mat-form-field appearance="outline">
+    <mat-label>Сортирова пользователей</mat-label>
+    <mat-select #list (selectionChange)="sort(list.value)">
+      <mat-option value="0">от А до Я</mat-option>
+      <mat-option value="1">от Я до А</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Поиск</mat-label>
+    <input matInput placeholder="найти пользователя" #input (keyup.enter)="search(input.value)">
+    <mat-icon matSuffix (click)="search(input.value)">search</mat-icon>
+  </mat-form-field>
+</div>
+
+<mat-selection-list #users>
+  <!-- #name - template reference variable для елементу, котрий може підтримувати даний запис -->
+  <mat-list-option
+    *ngFor="let user of usersList; let i = index"
+    [ngClass]="{ gray: i % 2 }"
+  >
+    <!-- Додає клас грей, якщо виконується умова-->
+    <div>
+      <span class="item circle">{{ i + 1 }}</span>
+      <span class="item">{{ user.username }}</span>
+      <span class="item">{{ user.name }}</span>
+      <span *ngIf="user.role === 'Admin'" class="item">{{ user.role }}</span>
+    </div>
+  </mat-list-option>
 </mat-selection-list>
 
-<p>
-Options selected: {{users.selectedOptions.selected.length}}
-</p> 
+<p>Options selected: {{ users.selectedOptions.selected.length }}</p>
